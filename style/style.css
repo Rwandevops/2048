@@ -9,6 +9,10 @@
     align-self: center;
 }
 
+.score{
+    font-size: 200px;
+}
+
 .td{
     width: auto;
     font-size: 40px;

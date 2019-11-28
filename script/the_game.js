@@ -4,6 +4,7 @@
         $("head").append("<script src='script/matrix_reloaded.js'> </script>");
         $("head").append("<script src='script/avengers_endgame.js'> </script>");
         $("head").append("<script src='script/move_your_body.js'> </script>");
+        $("head").append("<script src='script/display.js'> </script>");
 
         // Choix de la taille de grille de jeu
         $(this).append('<header class="header" value ="true"></header>');
@@ -12,12 +13,13 @@
     
         // Génération de la table
         var size = 4;
-        
-        // $("#4x4").click() = function(){
         generateMap(size);
-        // }
 
-        // $("#6x6").click() = function(){
+        // $("#4x4").on("click", function(){
+        //     generateMap(4);
+        // });
+
+        // var size = $("#6x6").click() = function(){
         //     generateMap(6);}
 
         generateCell(size);

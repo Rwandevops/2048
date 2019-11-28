@@ -26,34 +26,35 @@ function up(size){
     for(y = 0; y < size; y++){
         for(x = 0; x < size - 1; x++){
             // si la case vaut 0, on va chercher la première case non nulle de la colonne
-            if($(`#${x}${y}`).html() === '0'){
+            if(getValue(x, y) === '0'){
                 i = x + 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${i}${y}`).html() === '0' && i < size){
+                while(getValue(i, y) === '0' && i < size){
                     i++;
                 }
                 // si on a trouvé une case non nulle, on échange les valeurs
                 if(i < size){
-                    $(`#${x}${y}`).html($(`#${i}${y}`).html());
-                    $(`#${i}${y}`).html('0');
+                    nb = getValue(i, y);
+                    setValue(x, y, nb);
+                    setValue(i, y, 0);
                     generate = true;
                 }
             }
             // si la case n'est pas nulle, switch(valeur de la première case non nulle)
-            if($(`#${x}${y}`).html() !=='0'){
+            if(getValue(x, y) !=='0'){
                 i = x + 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${i}${y}`).html() === '0' && i < size){
+                while(getValue(i, y) === '0' && i < size){
                     i++;
                 }
                 // si on a trouvé une case non nulle, on teste les valeurs
                 if(i < size){
                     // si elles sont égales, on fusionne les cases 
-                    if($(`#${x}${y}`).html() === $(`#${i}${y}`).html()){
-                        let double = 2 * $(`#${x}${y}`).html();
-                        $(`#${x}${y}`).html(double);
-                        $(`#${i}${y}`).html('0');
-                        // scoreUpdate(double);
+                    if(getValue(x, y) === getValue(i, y)){
+                        let double = 2 * getValue(x, y);
+                        setValue(x, y, double);
+                        setValue(i, y, 0);
+                        scoreUpdate(double);
                         generate = true;
                     }
                     // sinon on fait rien
@@ -69,33 +70,34 @@ function down(size){
     for(y = 0; y < size; y++){
         for(x = size - 1; x >= 0; x--){
             // si la case vaut 0, on va chercher la première case non nulle de la colonne
-            if($(`#${x}${y}`).html() === '0'){
+            if(getValue(x, y) === '0'){
                 i = x - 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${i}${y}`).html() === '0' && i >= 0){
+                while(getValue(i, y) === '0' && i >= 0){
                     i--;
                 }
                 // si on a trouvé une case non nulle, on échange les valeurs
                 if(i >= 0){
-                    $(`#${x}${y}`).html($(`#${i}${y}`).html());
-                    $(`#${i}${y}`).html('0');
+                    nb = getValue(i, y);
+                    setValue(x, y, nb);
+                    setValue(i, y, 0);
                     generate = true;
                 }
             }
             // si la case est non nulle, switch(valeur de la première case non nulle)
-            if($(`#${x}${y}`).html() !=='0'){
+            if(getValue(x, y) !== '0'){
                 i = x - 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${i}${y}`).html() === '0' && i >= 0){
+                while(getValue(i, y) === '0' && i >= 0){
                     i--;
                 }
                 // si on a trouvé une case non nulle, on teste les valeurs
                 if(i >= 0){
-                    if($(`#${x}${y}`).html() === $(`#${i}${y}`).html()){
-                        let double = 2 * $(`#${x}${y}`).html();
-                        $(`#${x}${y}`).html(double);
-                        $(`#${i}${y}`).html('0');
-                        // scoreUpdate(double);
+                    if(getValue(x, y) === getValue(i, y)){
+                        let double = 2 * getValue(x, y);
+                        setValue(x, y, double);
+                        setValue(i, y, 0);
+                        scoreUpdate(double);
                         generate = true;
                     }
                 }
@@ -110,37 +112,38 @@ function left(size){
     for(x = 0; x < size; x++){
         for(y = 0; y < size - 1; y++){
             // si la case vaut 0, on va chercher la première case non nulle de la ligne
-            if($(`#${x}${y}`).html() === '0'){
+            if(getValue(x, y) === '0'){
                 j = y + 1;
-                while($(`#${x}${j}`).html() === '0' && j < size){
+                while(getValue(x, j) === '0' && j < size){
                     j++;
                 }
                 if(j < size){
-                    $(`#${x}${y}`).html($(`#${x}${j}`).html());
-                    $(`#${x}${j}`).html('0');
+                    nb = getValue(x, j);
+                    setValue(x, y, nb);
+                    setValue(x, j, 0);
                     generate = true;
                 }
             }
-            if($(`#${x}${y}`).html() !== '0'){
+            if(getValue(x, y) !== '0'){
                 i = x + 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${i}${y}`).html() === '0' && i >= 0){
+                while(getValue(i, y) === '0' && i >= 0){
                     i--;
                 }
                 // si on a trouvé une case non nulle, on teste les valeurs
-                if($(`#${x}${y}`).html() !== '0'){
+                if(getValue(x, y) !== '0'){
                     j = y + 1;
                     // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                    while($(`#${x}${j}`).html() === '0' && j < size){
+                    while(getValue(x, j) === '0' && j < size){
                         j++;
                     }
                     // si on a trouvé une case non nulle, on teste les valeurs
                     if(j < size){
-                        if($(`#${x}${y}`).html() === $(`#${x}${j}`).html()){
-                            let double = 2 * $(`#${x}${y}`).html();
-                            $(`#${x}${y}`).html(double);
-                            $(`#${x}${j}`).html('0');
-                            // scoreUpdate(double);
+                        if(getValue(x, y) === getValue(x, j)){
+                            let double = 2 * getValue(x, y);
+                            setValue(x, y, double);
+                            setValue(x, j, 0);
+                            scoreUpdate(double);
                             generate = true;
                         }
                     }
@@ -156,33 +159,34 @@ function right(size){
     for(x = 0; x < size; x++){
         for(y = size - 1; y >= 0; y--){
             // si la case vaut 0, on va chercher la première case non nulle de la ligne
-            if($(`#${x}${y}`).html() === '0'){
+            if(getValue(x, y) === '0'){
                 j = y - 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${x}${j}`).html() === '0' && j >= 0){
+                while(getValue(x, j) === '0' && j >= 0){
                     j--;
                 }
                 // si on a trouvé une case non nulle, on échange les valeurs
                 if(j >= 0){
-                    $(`#${x}${y}`).html($(`#${x}${j}`).html());
-                    $(`#${x}${j}`).html('0');
+                    nb = getValue(x, j);
+                    setValue(x, y, nb);
+                    setValue(x, j, 0);
                     generate = true;
                 }
             }
             // si la case n'est pas nulle, on va chercher la première case non nulle de la ligne
-            if($(`#${x}${y}`).html() !== '0'){
+            if(getValue(x, y) !== '0'){
                 j = y - 1;
                 // tant que les cases sont vides et qu'on n'est pas sorti de la grille
-                while($(`#${x}${j}`).html() === '0' && j >= 0){
+                while(getValue(x, j) === '0' && j >= 0){
                     j--;
                 }
                 // si on a trouvé une case non nulle, on fusionne si les valeurs sont égales
                 if(j >= 0){
-                    if($(`#${x}${y}`).html() === $(`#${x}${j}`).html()){
-                        let double = 2 * $(`#${x}${y}`).html();
-                        $(`#${x}${y}`).html(double);
-                        $(`#${x}${j}`).html('0');
-                        // scoreUpdate(double);
+                    if(getValue(x, y) === getValue(x, j)){
+                        let double = 2 * getValue(x, y);
+                        setValue(x, y, double);
+                        setValue(x, j, 0);
+                        scoreUpdate(double);
                         generate = true;
                     }
                 }
